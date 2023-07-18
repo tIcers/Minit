@@ -12,10 +12,10 @@ const PostList = () => {
     <div>
     {posts.map((post)=> (
       <div key={post.id}>
-      <h2 style={titleStyles}>
+      <h5 style={titleStyles}>
              <div style={upvotesDownvotesStyles}><FaArrowUp/>{post.upvotes}<FaArrowDown/></div>
         {post.title}
-      </h2>
+      </h5>
       <p>{post.image}</p>
       <p style={postInfoStyles}>
             Posted by: {post.author} | {post.time} |<FaComment/> {post.numOfComments}
@@ -38,7 +38,7 @@ const titleStyles = {
 const upvotesDownvotesStyles = {
   display:'flex',
   alignItems:'center',
-  marginRight:'30px'
+  marginRight:'110px'
 
 }
 
