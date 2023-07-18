@@ -10,7 +10,7 @@ const NavBar = () => {
           <span style={letterStyle}>Minit</span>
         </div>
       </div>
-      <div id="search" style={searchContainerStyles}>
+      <div >
         <SearchBar />
       </div>
     </nav>
@@ -28,10 +28,6 @@ const leftContainerStyles = {
   marginRight:'auto'
 }
 
-const searchContainerStyles = {
-  margin:'auto',
-  marginLeft:'15px'
-}
 
 const imageStyle = {
   height:'40px',
@@ -42,7 +38,8 @@ const letterStyle = {
   marginLeft:'8px',
   fontSize:'18px',
   display:'flex',
-  alignItems:'center'
+  alignItems:'center',
+  color:'blue'
 }
 const imageContainerStyle = {
   display: 'flex',
