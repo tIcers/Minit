@@ -20,7 +20,7 @@ const SearchBar = () => {
         placeholder="Search Topic"
         // onChange={handleChange}
         value={searchInput}
-        sytle={inputStyles}
+        style={inputStyles}
       />
       <FaSearch style = {searchIconStyles}/>
     </div>
@@ -34,19 +34,23 @@ const searchContainerStyles = {
   backgroundColor: "#f2f2f2",
   borderRadius: "20px",
   padding: "4px",
-  width: "200px",
+  width: "300px",
+  margin:'auto',
+  marginRight:'450px'
 }
 
 const inputStyles = {
   border:'none',
   outline:'none',
-  marginLeft:'8px',
+  marginLeft:'1px',
   width:'100%',
+  height:'30px'
 }
 
 const searchIconStyles = {
   marginLeft:'8px',
   color:'gray',
+  fontSize:'24px'
 }
 
 export default SearchBar
