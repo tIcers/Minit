@@ -1,0 +1,53 @@
+import React from "react"; 
+import SearchBar from './SearchBar'
+
+const NavBar = () => {
+  return (
+    <nav style={navStyles}>
+      <div style={leftContainerStyles}>
+        <div style={imageContainerStyle}>
+          <img src="../../AlienBlue_Icon.png" style={imageStyle} alt="logo" />
+          <span style={letterStyle}>Minit</span>
+        </div>
+      </div>
+      <div id="search" style={searchContainerStyles}>
+        <SearchBar />
+      </div>
+    </nav>
+  );
+};
+
+const navStyles = {
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'space-between',
+  height:'60px',
+  padding:'0 20px'
+}
+const leftContainerStyles = {
+  marginRight:'auto'
+}
+
+const searchContainerStyles = {
+  margin:'auto',
+  marginLeft:'15px'
+}
+
+const imageStyle = {
+  height:'40px',
+  width:'auto'
+}
+
+const letterStyle = {
+  marginLeft:'8px',
+  fontSize:'18px',
+  display:'flex',
+  alignItems:'center'
+}
+const imageContainerStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
+
+
+export default NavBar
