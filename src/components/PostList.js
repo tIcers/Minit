@@ -11,7 +11,7 @@ const PostList = () => {
   return (
     <div>
     {posts.map((post)=> (
-      <div key={post.id}>
+      <div key={post.id} style={cardStyle}>
       <h5 style={titleStyles}>
              <div style={upvotesDownvotesStyles}><FaArrowUp/>{post.upvotes}<FaArrowDown/></div>
         {post.title}
@@ -25,7 +25,13 @@ const PostList = () => {
     </div>
   )
 }
-
+const cardStyle = {
+  backgroundColor:'#f9f9f9',
+  padding:'10px',
+  marginBottom:'20px',
+  borderRadius:'8px',
+  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+}
 const postInfoStyles = {
   marginTop:'10px'
 }
