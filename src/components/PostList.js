@@ -1,5 +1,6 @@
 import React from "react";
 import {FaComment, FaArrowUp, FaArrowDown} from 'react-icons/fa'
+import { Link } from "react-router-dom";
 
 const PostList = () => {
   const posts =[
@@ -12,6 +13,9 @@ const PostList = () => {
     <div>
     {posts.map((post)=> (
       <div key={post.id} style={cardStyle}>
+          <Link to={`/post/${post.id}`} style={linkStyles}>
+            <h2>{post.title}</h2>
+          </Link>
       <h5 style={titleStyles}>
              <div style={upvotesDownvotesStyles}><FaArrowUp/>{post.upvotes}<FaArrowDown/></div>
         {post.title}
@@ -25,6 +29,12 @@ const PostList = () => {
     </div>
   )
 }
+
+const linkStyles ={
+  TextDecoration:'none',
+  color:'inherit'
+}
+
 const cardStyle = {
   backgroundColor:'#f9f9f9',
   padding:'10px',
