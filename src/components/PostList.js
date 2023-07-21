@@ -4,30 +4,33 @@ import { Link } from "react-router-dom";
 
 const PostList = () => {
   const posts =[
-    {id:1, title:'First Post', image:'First image', author:'Atsuki', time:'7 hours ago', numOfComments:'669', upvotes:'43k'},
-    {id:2, title:'Second Post', image:'Second image', author:'Hikaru', time:'8 hours ago', numOfComments:'390', upvotes:'6.7k'},
-    {id:3, title:'Third Post', image:'Third image', author:'Atsuki2', time:'3 hours ago', numOfComments:'112', upvotes:'1.2k'},
-    {id:4, title:'Forth Post', image:'Forth image', author:'Hikaru2', time:'4 hours ago', numOfComments:'900', upvotes:'9k'},
+    {id:1, title:'First Post', content:'this is my first post!', image:'First image', author:'Atsuki', time:'7 hours ago', numOfComments:'669', upvotes:'43k'},
+    {id:2, title:'Second Post', content:'this is my second post!',image:'Second image', author:'Hikaru', time:'8 hours ago', numOfComments:'390', upvotes:'6.7k'},
+    {id:3, title:'Third Post', content:'this is my third post!',image:'Third image', author:'Atsuki2', time:'3 hours ago', numOfComments:'112', upvotes:'1.2k'},
+    {id:4, title:'Forth Post', content:'this is my forth content!', image:'Forth image', author:'Hikaru2', time:'4 hours ago', numOfComments:'900', upvotes:'9k'},
   ]
+
   return (
     <div>
-    {posts.map((post)=> (
-      <div key={post.id} style={cardStyle}>
-          <Link to={`/post/${post.id}`} style={linkStyles}>
+      {posts.map((post) => (
+        <div key={post.id} style={cardStyle}>
+          <Link to={`/post/${post.id}?postContent=${encodeURIComponent(post.content)}`} style={linkStyles}>
             <h2>{post.title}</h2>
           </Link>
-      <h5 style={titleStyles}>
-             <div style={upvotesDownvotesStyles}><FaArrowUp/>{post.upvotes}<FaArrowDown/></div>
-        {post.title}
-      </h5>
-      <p>{post.image}</p>
-      <p style={postInfoStyles}>
+          <h5 style={titleStyles}>
+            <div style={upvotesDownvotesStyles}>
+              <FaArrowUp/>{post.upvotes}<FaArrowDown/>
+            </div>
+            {post.title}
+          </h5>
+          <p>{post.image}</p>
+          <p style={postInfoStyles}>
             Posted by: {post.author} | {post.time} |<FaComment/> {post.numOfComments}
-      </p>
-      </div>
-    ))}
+          </p>
+        </div>
+      ))}
     </div>
-  )
+  );
 }
 
 const linkStyles ={
