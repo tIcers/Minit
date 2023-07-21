@@ -1,20 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {FaComment, FaArrowUp, FaArrowDown} from 'react-icons/fa'
 import { Link } from "react-router-dom";
 
 const PostList = () => {
-  const posts =[
-    {id:1, title:'First Post', content:'this is my first post!', image:'First image', author:'Atsuki', time:'7 hours ago', numOfComments:'669', upvotes:'43k'},
-    {id:2, title:'Second Post', content:'this is my second post!',image:'Second image', author:'Hikaru', time:'8 hours ago', numOfComments:'390', upvotes:'6.7k'},
-    {id:3, title:'Third Post', content:'this is my third post!',image:'Third image', author:'Atsuki2', time:'3 hours ago', numOfComments:'112', upvotes:'1.2k'},
-    {id:4, title:'Forth Post', content:'this is my forth content!', image:'Forth image', author:'Hikaru2', time:'4 hours ago', numOfComments:'900', upvotes:'9k'},
-  ]
+  const subreddit = 'reactjs'
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+  
+  const fetchPosts = async() => {
+    try {
+      const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
+      const data = await response.json()
+      if(data && data.data && data.data.children){
+        const postData = data.data.children.map((child) => child.data)
+        setPosts(postData)
+      }
+      
+    } catch (error) {
+      console.error('Error fetching posts:', error)
+    }
+  }
 
   return (
     <div>
       {posts.map((post) => (
         <div key={post.id} style={cardStyle}>
-          <Link to={`/post/${post.id}?postContent=${encodeURIComponent(post.content)}`} style={linkStyles}>
+          <Link to={`/post/${post.id}?postContent=${encodeURIComponent(post.content)} &upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${encodeURIComponent(post.numOfComments)}`} style={linkStyles}>
             <h2>{post.title}</h2>
           </Link>
           <h5 style={titleStyles}>
@@ -25,7 +38,7 @@ const PostList = () => {
           </h5>
           <p>{post.image}</p>
           <p style={postInfoStyles}>
-            Posted by: {post.author} | {post.time} |<FaComment/> {post.numOfComments}
+            Posted by: {post.author} | {post.time} | <FaComment/> {post.numOfComments}
           </p>
         </div>
       ))}
