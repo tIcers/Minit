@@ -1,23 +1,15 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import AddComment from "./AddComment";
-import CommentList from "./CommentList";
+import { useLocation, useSearchParams} from "react-router-dom";
 
 const PostDetails = () => {
-  const {postId} = useParams()
-  const [comments, setComments] = useState([])
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const postContent = searchParams.get('postContent')
 
-  const handleAddComment = (comment) => {
-    setComments([...comments, comment])
-
-  }
   return (
     <div>
       <h2>Post Details:</h2>
-      <p>Post ID: {postId}</p>
-      <AddComment onAddComment={handleAddComment}/ >
-      <CommentList comments={comments}/>
-
+      {postContent ? <p>{postContent}</p> : <p> No content Available.</p>}
     </div>
   )
 }
