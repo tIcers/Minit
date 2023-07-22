@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const PostList = () => {
   const subreddit = 'reactjs'
   const [posts, setPosts] = useState([])
+
   useEffect(() => {
     fetchPosts()
   }, [])
@@ -14,10 +15,21 @@ const PostList = () => {
       const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
       const data = await response.json()
       if(data && data.data && data.data.children){
-        const postData = data.data.children.map((child) => child.data)
+        const postData = data.data.children.map((child) => {
+        const post = child.data
+        return {
+          id:post.id,
+          title:post.title,
+          content:post.selftext,
+          image:post.thumbnail,
+          author:post.author,
+          time:post.created_utc,
+          numOfComments:post.num_comments,
+          upvotes:post.ups,
+        }
+      })
         setPosts(postData)
-      }
-      
+      } 
     } catch (error) {
       console.error('Error fetching posts:', error)
     }
