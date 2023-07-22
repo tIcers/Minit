@@ -2,27 +2,26 @@ import React , {useState}from "react";
 import { FaSearch } from "react-icons/fa";
 
 
-const SearchBar = () => {
+const SearchBar = ({onSubredditChange}) => {
   const [searchInput, setSearchInput] = useState("")
-// const handleChange = (e) => {
-//   e.preventDefault()
-//   setSearchInput(e.target.value)
-//   if(searchInput.length > 0){
-//     items.filter((el) -> {
-//       return items.name.match(searchInput)
-//     })
-//   }
-// }
+
+  const handleChange = (e) => {
+    setSearchInput(e.target.value)
+  }
+
+  const handleSearch = () => {
+    onSubredditChange(searchInput)
+  }
   return (
     <div style={searchContainerStyles}>
       <input 
         type="text"
         placeholder="Search Topic"
-        // onChange={handleChange}
+        onChange={handleChange}
         value={searchInput}
         style={inputStyles}
       />
-      <FaSearch style = {searchIconStyles}/>
+      <FaSearch style = {searchIconStyles} onClick={handleSearch}/>
     </div>
   )
 }
