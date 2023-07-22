@@ -39,16 +39,20 @@ const PostList = () => {
     <div>
       {posts.map((post) => (
         <div key={post.id} style={cardStyle}>
-          <Link to={`/post/${post.id}?postContent=${encodeURIComponent(post.content)} &upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${encodeURIComponent(post.numOfComments)}`} style={linkStyles}>
+          <Link to={`/post/${post.id}?postContent=${encodeURIComponent(post.content)}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${encodeURIComponent(post.numOfComments)}`} style={linkStyles}>
             <h2>{post.title}</h2>
           </Link>
+          {post.image && post.image !== "self" ? (
+            <img src={post.image} alt={post.title} style={imageStyle} />
+          ) : (
+            <div style={placeholderStyle}>No Image</div>
+          )}
           <h5 style={titleStyles}>
             <div style={upvotesDownvotesStyles}>
               <FaArrowUp/>{post.upvotes}<FaArrowDown/>
             </div>
             {post.title}
           </h5>
-          <p>{post.image}</p>
           <p style={postInfoStyles}>
             Posted by: {post.author} | {post.time} | <FaComment/> {post.numOfComments}
           </p>
@@ -56,12 +60,18 @@ const PostList = () => {
       ))}
     </div>
   );
-}
+};
 
 const linkStyles ={
   TextDecoration:'none',
   color:'inherit'
 }
+
+const imageStyle = {
+  width: '100%',
+  height: 'auto',
+  marginBottom: '10px',
+};
 
 const cardStyle = {
   backgroundColor:'#f9f9f9',
@@ -85,5 +95,14 @@ const upvotesDownvotesStyles = {
   marginRight:'110px'
 
 }
+const placeholderStyle = {
+  width: '100%',
+  height: '150px',
+  backgroundColor: '#f3f3f3',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: '10px',
+};
 
 export default PostList
