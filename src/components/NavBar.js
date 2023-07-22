@@ -1,7 +1,13 @@
-import React from "react"; 
+import React , {useState} from "react"; 
 import SearchBar from './SearchBar'
 
-const NavBar = () => {
+const NavBar = ({onSearch, onSubredditChange}) => {
+  const [subreddit, setSubreddit] = useState('reactjs')
+
+  const handleSubredditChange = (e) => {
+    setSubreddit(e.target.value)
+    onSubredditChange(e.target.value)
+  }
   return (
     <nav style={navStyles}>
       <div style={leftContainerStyles}>
@@ -11,7 +17,7 @@ const NavBar = () => {
         </div>
       </div>
       <div >
-        <SearchBar />
+        <SearchBar onSearch={onSearch}/>
       </div>
     </nav>
   );
