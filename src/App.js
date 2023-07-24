@@ -9,14 +9,14 @@ import { useState } from 'react';
 function App() {
   const [subreddit, setSubreddit] = useState('reactjs')
 
-  const handleSubredditChange = (selectedSubreddit) => {
-    setSubreddit(selectedSubreddit)
+  const handleSearch= (searchInput) => {
+    setSubreddit(searchInput)
   }
   return (
     <Router>
-      <NavBar/>
+      <NavBar />
       <Routes>
-        <Route path='/' element={<PostList/>}/>
+        <Route path='/' element={<PostList subreddit={subreddit}/>}/>
         <Route path='/post/:postId' element={<PostDetails/>}/>
       </Routes>
     </Router>
