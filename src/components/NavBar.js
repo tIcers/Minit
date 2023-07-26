@@ -1,7 +1,7 @@
 import React from "react"; 
 import SearchBar from './SearchBar'
 
-const NavBar = () => {
+const NavBar = ({onSubredditChange}) => {
   return (
     <nav style={navStyles}>
       <div style={leftContainerStyles}>
@@ -11,7 +11,7 @@ const NavBar = () => {
         </div>
       </div>
       <div >
-        <SearchBar />
+        <SearchBar onSubredditChange={onSubredditChange}/>
       </div>
     </nav>
   );

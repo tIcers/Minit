@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import NavBar from './components/NavBar';
 import PostList from './components/PostList';
@@ -9,12 +8,12 @@ import { useState } from 'react';
 function App() {
   const [subreddit, setSubreddit] = useState('reactjs')
 
-  const handleSearch= (searchInput) => {
+  const handleSubredditChange= (searchInput) => {
     setSubreddit(searchInput)
   }
   return (
     <Router>
-      <NavBar />
+      <NavBar onSubredditChange={handleSubredditChange} />
       <Routes>
         <Route path='/' element={<PostList subreddit={subreddit}/>}/>
         <Route path='/post/:postId' element={<PostDetails/>}/>
