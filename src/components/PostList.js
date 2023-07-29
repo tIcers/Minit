@@ -6,6 +6,13 @@ const PostList = () => {
   const subreddit = 'reactjs'
   const [posts, setPosts] = useState([])
 
+  const maxContentLength = 200
+  const [showFullContentId, setShowFullContentId] = useState(null)
+
+  const toggleContentDisplay = (postId) => {
+    setShowFullContentId((prev) => (prev === postId ? null : postId))
+  }
+
   useEffect(() => {
     fetchPosts()
   }, [])
@@ -65,7 +72,15 @@ const PostList = () => {
           {post.image && post.image !== "self" ? (
             <img src={post.image} alt={post.title} style={imageStyle} />
           ) : (
-            <div style={placeholderStyle}>{post.content}</div>
+            <div style={placeholderStyle}>
+                {post.content.length > maxContentLength ? `${post.content.slice(0, maxContentLength)}...` : post.content}
+
+                {post.content.length > maxContentLength && (
+                  <button onClick={() => toggleContentDisplay(post.id)}>
+                    {showFullContentId === post.id ? "Show less" :"Show more"}
+                  </button>
+                )}
+            </div>
           )}
           <h5 style={titleStyles}>
             <div style={upvotesDownvotesStyles}>
