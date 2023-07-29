@@ -66,14 +66,12 @@ const PostList = () => {
     <div>
       {posts.map((post) => (
         <div key={post.id} style={cardStyle}>
-          <Link
-            to={`/post/${post.id}?postContent=${encodeURIComponent(
-              post.content
-            )}&upvotes=${encodeURIComponent(
-              post.upvotes
-            )}&numOfComments=${encodeURIComponent(post.num_comments)}`}
-            style={linkStyles}
-          >
+        <Link
+          to={`/post/${post.id}?postContent=${encodeURIComponent(
+            post.content
+          )}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${post.numOfComments}`}
+          style={linkStyles}
+        >
             <h2>{post.title}</h2>
           </Link>
           {post.image && post.image !== "self" ? (
