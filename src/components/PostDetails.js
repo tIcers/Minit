@@ -10,24 +10,20 @@ const PostDetails = () => {
 
   return (
     <div>
-      <h2 >Post Details:</h2>
-      {postContent ? (
-        <div style = {cardStyle}>
+      <h2>Post Details:</h2>
+      <div style={cardStyle}>
         <p>{postContent}</p>
         <div style={voteStyles}>
-          <FaArrowUp style={arrowStyle}/>
-            {upvotes}
-          <FaArrowDown style={arrowStyle}/>
-          <FaComment style={commentIconStyle}/>
-            {numOfComments}
+          <FaArrowUp style={arrowStyle} />
+          {upvotes}
+          <FaArrowDown style={arrowStyle} />
+          <FaComment style={commentIconStyle} />
+          {numOfComments}
         </div>
+      </div>
     </div>
-    ) : (
-      <p> NO content available.</p>
-    )}
-    </div>
-  )
-}
+  );
+};
 
 const cardStyle = {
   backgroundColor:'#f9f9f9',
