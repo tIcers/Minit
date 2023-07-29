@@ -66,20 +66,39 @@ const PostList = () => {
     <div>
       {posts.map((post) => (
         <div key={post.id} style={cardStyle}>
-          <Link to={`/post/${post.id}?postContent=${encodeURIComponent(post.content)}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${encodeURIComponent(post.numOfComments)}`} style={linkStyles}>
+          <Link
+            to={`/post/${post.id}?postContent=${encodeURIComponent(
+              post.content
+            )}&upvotes=${encodeURIComponent(
+              post.upvotes
+            )}&numOfComments=${encodeURIComponent(post.num_comments)}`}
+            style={linkStyles}
+          >
             <h2>{post.title}</h2>
           </Link>
           {post.image && post.image !== "self" ? (
             <img src={post.image} alt={post.title} style={imageStyle} />
           ) : (
             <div style={placeholderStyle}>
-                {post.content.length > maxContentLength ? `${post.content.slice(0, maxContentLength)}...` : post.content}
-
-                {post.content.length > maxContentLength && (
-                  <button onClick={() => toggleContentDisplay(post.id)}>
-                    {showFullContentId === post.id ? "Show less" :"Show more"}
-                  </button>
-                )}
+              {post.content.length > maxContentLength ? (
+                <>
+                  {showFullContentId === post.id ? (
+                    post.content // Show full content
+                  ) : (
+                    <>
+                      {`${post.content.slice(0, maxContentLength)}...`}
+                      <button
+                        style={{ color: "blue", textDecoration: "underline", border: "none", background: "none", cursor: "pointer" }}
+                        onClick={() => toggleContentDisplay(post.id)}
+                      >
+                        Show more
+                      </button>
+                    </>
+                  )}
+                </>
+              ) : (
+                post.content
+              )}
             </div>
           )}
           <h5 style={titleStyles}>
