@@ -65,13 +65,12 @@ const PostList = () => {
           {post.image && post.image !== "self" ? (
             <img src={post.image} alt={post.title} style={imageStyle} />
           ) : (
-            <div style={placeholderStyle}>No Image</div>
+            <div style={placeholderStyle}>{post.content}</div>
           )}
           <h5 style={titleStyles}>
             <div style={upvotesDownvotesStyles}>
               <FaArrowUp/>{post.upvotes}<FaArrowDown/>
             </div>
-            {post.title}
           </h5>
           <p style={postInfoStyles}>
             Posted by: {post.author} | {formatTime(post.time)} | <FaComment/> {post.numOfComments}
