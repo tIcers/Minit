@@ -10,7 +10,7 @@ const PostList = () => {
     fetchPosts()
   }, [])
   
-  const fetchPosts = async(subreddit) => {
+  const fetchPosts = async() => {
     try {
       const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
       const data = await response.json()
