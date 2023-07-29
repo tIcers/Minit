@@ -35,6 +35,26 @@ const PostList = () => {
     }
   }
 
+  const formatTime = (timeStamp) => {
+    const currentDate = new Date()
+    const postDate = new Date(timeStamp * 1000) // convert to milliseconds
+
+    const timeDiff = currentDate.getTime() - postDate.getTime()
+    const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
+
+    if(hoursDiff < 1){
+      return "Less than an hour ago"
+    }else if(hoursDiff ===1 ){
+      return "1 hour ago"
+    }else if (hoursDiff < 24){
+      return `${hoursDiff} hours ago`
+    }else{
+      const dayDiff = Math.floor(hoursDiff / 24)
+      return dayDiff === 1 ? "1 day ago" : `${dayDiff} days ago`
+    }
+
+  }
+
   return (
     <div>
       {posts.map((post) => (
@@ -54,7 +74,7 @@ const PostList = () => {
             {post.title}
           </h5>
           <p style={postInfoStyles}>
-            Posted by: {post.author} | {post.time} | <FaComment/> {post.numOfComments}
+            Posted by: {post.author} | {formatTime(post.time)} | <FaComment/> {post.numOfComments}
           </p>
         </div>
       ))}
