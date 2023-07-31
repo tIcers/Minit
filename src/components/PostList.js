@@ -62,6 +62,7 @@ const PostList = () => {
 
   }
 
+
   return (
     <div>
       {posts.map((post) => (
