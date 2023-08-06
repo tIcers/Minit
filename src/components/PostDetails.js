@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaArrowDown, FaArrowUp, FaComment } from "react-icons/fa";
 import { useLocation, useParams } from "react-router-dom";
+import { formatTime } from "./PostList";
 
 const PostDetails = () => {
   const location = useLocation();
@@ -36,17 +37,6 @@ const PostDetails = () => {
       if (Array.isArray(commentsData) && commentsData.length > 0) {
         const flatternComments = flattetnCommentsTree(commentsData)
         setPostComments(flatternComments)
-        // const commentData = commentsData.map((child) => {
-        //   const comment = child.data;
-        //   return {
-        //     id: comment.id,
-        //     text: comment.body,
-        //     author: comment.author,
-        //     upvotes: comment.ups,
-        //     time: comment.created_utc,
-        //   };
-        // });
-        // setPostComments(commentData);
       } else {
         // No comments available or API response structure is different
         setPostComments([]);
@@ -64,7 +54,7 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
       text:comment.data.body,
       author:comment.data.author,
       upvotes:comment.data.ups,
-      time:comment.data.createad_utc,
+      time:comment.data.created_utc,
       depth:depth
     })
     if (comment.data.replies && comment.data.replies.data && comment.data.replies.data.children){
@@ -106,7 +96,7 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
               Upvotes: {comment.upvotes}
               </p>
               <p style={{marginLeft: `${comment.depth * 20}px`}}>
-              Time: {comment.time}
+              Time: {formatTime(comment.time)}
               </p>
             </div>
           ))
