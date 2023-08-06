@@ -16,7 +16,7 @@ const SearchBar = ({onSubredditChange}) => {
     <div style={searchContainerStyles}>
       <input 
         type="text"
-        placeholder="Search Topic"
+        placeholder="Search Subreddits"
         onChange={handleChange}
         value={searchInput}
         style={inputStyles}
@@ -30,20 +30,21 @@ const SearchBar = ({onSubredditChange}) => {
 const searchContainerStyles = {
   display: "flex",
   alignItems: "center",
+  justifyContent: "center", // Center the search bar horizontally
   backgroundColor: "#f2f2f2",
   borderRadius: "20px",
   padding: "4px",
-  width: "300px",
-  margin:'auto',
-  marginRight:'450px'
-}
+  width: "100%", // Use relative width to adjust to available space
+  maxWidth:'400px'
+};
 
 const inputStyles = {
   border:'none',
   outline:'none',
   marginLeft:'1px',
   width:'100%',
-  height:'30px'
+  height:'30px',
+  margin:'auto'
 }
 
 const searchIconStyles = {
