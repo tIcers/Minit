@@ -2,47 +2,7 @@ import React, { useEffect, useState } from "react";
 import {FaComment, FaArrowUp, FaArrowDown} from 'react-icons/fa'
 import { Link } from "react-router-dom";
 
-const PostList = () => {
-  const subreddit = 'reactjs'
-  const [posts, setPosts] = useState([])
-
-  const maxContentLength = 200
-  const [showFullContentId, setShowFullContentId] = useState(null)
-
-  const toggleContentDisplay = (postId) => {
-    setShowFullContentId((prev) => (prev === postId ? null : postId))
-  }
-
-  useEffect(() => {
-    fetchPosts()
-  }, [])
-  
-  const fetchPosts = async() => {
-    try {
-      const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
-      const data = await response.json()
-      if(data && data.data && data.data.children){
-        const postData = data.data.children.map((child) => {
-        const post = child.data
-        return {
-          id:post.id,
-          title:post.title,
-          content:post.selftext,
-          image:post.thumbnail,
-          author:post.author,
-          time:post.created_utc,
-          numOfComments:post.num_comments,
-          upvotes:post.ups,
-        }
-      })
-        setPosts(postData)
-      } 
-    } catch (error) {
-      console.error('Error fetching posts:', error)
-    }
-  }
-
-  const formatTime = (timeStamp) => {
+export const formatTime = (timeStamp) => {
     const currentDate = new Date()
     const postDate = new Date(timeStamp * 1000) // convert to milliseconds
 
@@ -60,6 +20,47 @@ const PostList = () => {
       return dayDiff === 1 ? "1 day ago" : `${dayDiff} days ago`
     }
 
+  }
+
+const PostList = () => {
+  const subreddit = 'reactjs'
+  const [posts, setPosts] = useState([])
+
+  const maxContentLength = 200
+  const [showFullContentId, setShowFullContentId] = useState(null)
+
+  const toggleContentDisplay = (postId) => {
+    setShowFullContentId((prev) => (prev === postId ? null : postId))
+  }
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+  
+ const fetchPosts = async() => {
+    try {
+      const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
+      const data = await response.json()
+      if(data && data.data && data.data.children){
+        const postData = data.data.children.map((child) => {
+        const post = child.data
+        console.log("image thumbnail", post.thumbnail)
+        return {
+          id:post.id,
+          title:post.title,
+          content:post.selftext,
+          image:post.thumbnail,
+          author:post.author,
+          time:post.created_utc,
+          numOfComments:post.num_comments,
+          upvotes:post.ups,
+        }
+      })
+        setPosts(postData)
+      } 
+    } catch (error) {
+      console.error('Error fetching posts:', error)
+    }
   }
 
 
