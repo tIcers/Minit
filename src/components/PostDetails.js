@@ -23,14 +23,6 @@ const PostDetails = () => {
         `https://www.reddit.com/r/reactjs/comments/${postId}.json`
       );
       const data = await response.json();
-      console.log("API Res Data:", data);
-
-      console.log("location", location)
-      console.log("------------------SERACH PARAMS ----------------", searchParams)
-      console.log("postContent", postContent)
-      console.log("upvotes",upvotes)
-      console.log("numOfComments", numOfComments)
-      console.log("postId", postId)
 
       // Check if comments data is available in the response
       const commentsData = data[1]?.data?.children;
@@ -87,16 +79,15 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
           postComments.map((comment) => (
             <div key={comment.id} style={commentStyle}>
               <p style={{marginLeft: `${comment.depth * 20}px`}}>
-                Comment text: {comment.text}
+              {comment.author} | {formatTime(comment.time)}
               </p>
               <p style={{marginLeft: `${comment.depth * 20}px`}}>
-              Author: {comment.author}
+              </p>
+              <p style={{marginLeft: `${comment.depth * 20}px`}}>
+                {comment.text}
               </p>
               <p style={{marginLeft:`${comment.depth * 20}px`}}>
-              Upvotes: {comment.upvotes}
-              </p>
-              <p style={{marginLeft: `${comment.depth * 20}px`}}>
-              Time: {formatTime(comment.time)}
+              <FaArrowUp/> {comment.upvotes}<FaArrowDown/>
               </p>
             </div>
           ))
