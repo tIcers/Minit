@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaArrowDown, FaArrowUp, FaComment } from "react-icons/fa";
 import { useLocation, useParams } from "react-router-dom";
 import { formatTime } from "./PostList";
+import React from "react";
 
 const PostDetails = () => {
   const location = useLocation();
@@ -47,8 +48,10 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
       author:comment.data.author,
       upvotes:comment.data.ups,
       time:comment.data.created_utc,
-      depth:depth
+      depth:depth,
+      avatar:comment.icon_image,
     })
+
     if (comment.data.replies && comment.data.replies.data && comment.data.replies.data.children){
       flatComments = [
         ...flatComments,
@@ -75,25 +78,30 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
       {/* Rendering comments with the commentStyle */}
       <div>
         <h3>Comments:</h3>
-        {postComments.length > 0 ? (
-          postComments.map((comment) => (
-            <div key={comment.id} style={commentStyle}>
-              <p style={{marginLeft: `${comment.depth * 20}px`}}>
-              {comment.author} | {formatTime(comment.time)}
-              </p>
-              <p style={{marginLeft: `${comment.depth * 20}px`}}>
-              </p>
-              <p style={{marginLeft: `${comment.depth * 20}px`}}>
-                {comment.text}
-              </p>
-              <p style={{marginLeft:`${comment.depth * 20}px`}}>
-              <FaArrowUp/> {comment.upvotes}<FaArrowDown/>
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No comments available.</p>
-        )}
+{postComments.length > 0 ? (
+  postComments.map((comment) => (
+    <React.Fragment key={comment.id}>
+      <div style={commentStyle}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {comment.avatar && (
+            <img src={comment.avatar} alt={`${comment.author}'s avatar`} style={{ width: '24px', height: '24px', marginRight: '8px' }} />
+          )}
+          <p style={{ marginLeft: `${comment.depth * 20}px` }}>
+            {comment.author} | {formatTime(comment.time)}
+          </p>
+        </div>
+        <p style={{ marginLeft: `${comment.depth * 20}px` }}>
+          {comment.text}
+        </p>
+        <p style={{ marginLeft:`${comment.depth * 20}px` }}>
+          <FaArrowUp/> {comment.upvotes} <FaArrowDown/>
+        </p>
+      </div>
+    </React.Fragment>
+  ))
+) : (
+  <p>No comments available.</p>
+)}
       </div>
     </div>
   );
