@@ -74,33 +74,13 @@ const PostList = () => {
           )}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${post.numOfComments}`}
           style={linkStyles}
         >
-            <h2>{post.title}</h2>
-          </Link>
-          {post.image && post.image !== "self" ? (
-            <img src={post.image} alt={post.title} style={imageStyle} />
-          ) : (
-            <div style={placeholderStyle}>
-              {post.content.length > maxContentLength ? (
-                <>
-                  {showFullContentId === post.id ? (
-                    post.content // Show full content
-                  ) : (
-                    <>
-                      {`${post.content.slice(0, maxContentLength)}...`}
-                      <button
-                        style={{ color: "blue", textDecoration: "underline", border: "none", background: "none", cursor: "pointer" }}
-                        onClick={() => toggleContentDisplay(post.id)}
-                      >
-                        Show more
-                      </button>
-                    </>
-                  )}
-                </>
-              ) : (
-                post.content
+            <div style={titleContainerStyle}>
+              {post.image && post.image != 'self' && (
+                <img src={post.image} alt='img' style={thumbnailStyle}/>
               )}
+            <h2 style={titleStyles}>{post.title}</h2>
             </div>
-          )}
+          </Link>
           <h5 style={titleStyles}>
             <div style={upvotesDownvotesStyles}>
               <FaArrowUp/>{post.upvotes}<FaArrowDown/>
@@ -115,24 +95,29 @@ const PostList = () => {
   );
 };
 
+const titleContainerStyle = {
+  display:"flex",
+  alignItems:'center'
+}
+const thumbnailStyle = {
+  width: "40px",
+  height: "40px",
+  marginRight: "8px",
+};
 const linkStyles ={
   TextDecoration:'none',
   color:'inherit'
 }
 
-const imageStyle = {
-  width: '100%',
-  height: 'auto',
-  marginBottom: '10px',
-};
-
 const cardStyle = {
-  backgroundColor:'#f9f9f9',
-  padding:'10px',
-  marginBottom:'20px',
-  borderRadius:'8px',
-  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-}
+  border: "1px solid #ddd",
+  borderRadius: "8px",
+  padding: "16px",
+  margin: "16px",
+  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+  background: "#fff",
+  background: "#f5f5f5", 
+};
 const postInfoStyles = {
   marginTop:'10px'
 }
@@ -148,14 +133,5 @@ const upvotesDownvotesStyles = {
   marginRight:'110px'
 
 }
-const placeholderStyle = {
-  width: '100%',
-  height: '150px',
-  backgroundColor: '#f3f3f3',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginBottom: '10px',
-};
 
 export default PostList
