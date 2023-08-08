@@ -5,11 +5,11 @@ import PostDetails from './components/PostDetails';
 import { useState } from 'react';
 
 function App() {
-  const [subreddit, setSubreddit] = useState('reactjs')
+  const [subreddit, setSubreddit] = useState("reactjs");
 
-  const handleSubredditChange= (searchInput) => {
-    setSubreddit(searchInput)
-  }
+  const handleSubredditChange = (searchInput) => {
+    setSubreddit(searchInput);
+  };
   return (
     <Router>
       <NavBar onSubredditChange={handleSubredditChange} />
