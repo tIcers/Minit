@@ -12,12 +12,19 @@ const SearchBar = ({onSubredditChange}) => {
   const handleSearch = () => {
     onSubredditChange(searchInput)
   }
+
+  const handleKeyPress = (e) => {
+    if (e.key ==="Enter"){
+      handleSearch()
+    }
+  }
   return (
     <div style={searchContainerStyles}>
       <input 
         type="text"
         placeholder="Search Subreddits"
         onChange={handleChange}
+        onKeyPress={handleKeyPress}
         value={searchInput}
         style={inputStyles}
       />
