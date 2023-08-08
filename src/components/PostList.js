@@ -60,6 +60,7 @@ const PostList = ({subreddit}) => {
     <div>
       {posts.map((post) => (
         <div key={post.id} style={cardStyle}>
+          <p style={subredditStyle}>r/{subreddit}</p>
         <Link
           to={`/post/${post.id}?postContent=${encodeURIComponent(
             post.content
@@ -138,6 +139,11 @@ const postInfoStyles = {
 const titleStyles = {
   display:'flex',
   alignItems:'center',
+}
+
+const subredditStyle = {
+  color:'gray',
+  fontWeight:'bold'
 }
 
 export default PostList
