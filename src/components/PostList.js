@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {FaComment, FaArrowUp, FaArrowDown} from 'react-icons/fa'
+import {FaComment, FaArrowUp, FaArrowDown, FaPen} from 'react-icons/fa'
 import { Link } from "react-router-dom";
 
 export const formatTime = (timeStamp) => {
@@ -25,13 +25,6 @@ export const formatTime = (timeStamp) => {
 const PostList = () => {
   const subreddit = 'reactjs'
   const [posts, setPosts] = useState([])
-
-  const maxContentLength = 200
-  const [showFullContentId, setShowFullContentId] = useState(null)
-
-  const toggleContentDisplay = (postId) => {
-    setShowFullContentId((prev) => (prev === postId ? null : postId))
-  }
 
   useEffect(() => {
     fetchPosts()
@@ -75,17 +68,18 @@ const PostList = () => {
           style={linkStyles}
         >
             <div style={titleContainerStyle}>
-              {post.image && post.image != 'self' && (
-                <img src={post.image} alt='img' style={thumbnailStyle}/>
-              )}
-            <h2 style={titleStyles}>{post.title}</h2>
-            </div>
-          </Link>
-          <h5 style={titleStyles}>
-            <div style={upvotesDownvotesStyles}>
-              <FaArrowUp/>{post.upvotes}<FaArrowDown/>
-            </div>
-          </h5>
+        {post.image && post.image !== "self" ? (
+          <img src={post.image} alt="" style={imageStyle} />
+        ) : (
+          <FaPen  />
+        )}
+        <h2 style={titleStyles}>{post.title}</h2>
+        <div style={upvotesContainerStyle}>
+          <FaArrowUp />
+          <span style={upvotesStyle}>{post.upvotes}</span>
+        </div>
+      </div>
+    </Link>
           <p style={postInfoStyles}>
             Posted by: {post.author} | {formatTime(post.time)} | <FaComment/> {post.numOfComments}
           </p>
@@ -96,20 +90,38 @@ const PostList = () => {
 };
 
 const titleContainerStyle = {
-  display:"flex",
-  alignItems:'center'
-}
-const thumbnailStyle = {
-  width: "40px",
-  height: "40px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
+const imageStyle = {
+  height: "100px",
+  width: "100px",
   marginRight: "8px",
+  marginTop:'10px',
+};
+
+const upvotesContainerStyle = {
+  display: "flex",
+  alignItems: "center",
+  background: "DarkGray", // You can change the background color of the upvotes container here
+  borderRadius: "4px",
+  padding: "4px 8px",
+};
+
+const upvotesStyle = {
+  marginLeft: "4px",
+  color: "white",
 };
 const linkStyles ={
   TextDecoration:'none',
   color:'inherit'
 }
 
-const cardStyle = {
+export const cardStyle = {
+  display:'flex',
+  flexDirection:'column',
   border: "1px solid #ddd",
   borderRadius: "8px",
   padding: "16px",
@@ -119,19 +131,14 @@ const cardStyle = {
   background: "#f5f5f5", 
 };
 const postInfoStyles = {
-  marginTop:'10px'
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'center',
 }
 
 const titleStyles = {
   display:'flex',
   alignItems:'center',
-}
-
-const upvotesDownvotesStyles = {
-  display:'flex',
-  alignItems:'center',
-  marginRight:'110px'
-
 }
 
 export default PostList

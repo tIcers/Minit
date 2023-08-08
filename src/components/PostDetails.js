@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { FaArrowDown, FaArrowUp, FaComment } from "react-icons/fa";
 import { useLocation, useParams } from "react-router-dom";
-import { formatTime } from "./PostList";
+import { formatTime, cardStyle } from "./PostList";
 import React from "react";
-
 const PostDetails = () => {
   const location = useLocation();
   const postId = location.pathname.split("/post/")[1]
@@ -81,7 +80,7 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
 {postComments.length > 0 ? (
   postComments.map((comment) => (
     <React.Fragment key={comment.id}>
-      <div style={commentStyle}>
+      <div style={cardStyle}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {comment.avatar && (
             <img src={comment.avatar} alt={`${comment.author}'s avatar`} style={{ width: '24px', height: '24px', marginRight: '8px' }} />
@@ -107,20 +106,6 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
   );
 };
 
-const commentStyle = {
-  border: "1px solid #ddd",
-  borderRadius: "5px",
-  padding: "10px",
-  marginBottom: "10px",
-};
-
-const cardStyle = {
-  backgroundColor:'#f9f9f9',
-  padding:'10px',
-  marginBottom:'20px',
-  borderRadius:'8px',
-  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-}
 
 const voteStyles = {
   display:'flex',
