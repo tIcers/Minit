@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {FaComment, FaArrowUp, FaArrowDown, FaPen} from 'react-icons/fa'
 import { Link } from "react-router-dom";
+import '../load.css'
 
 export const formatTime = (timeStamp) => {
     const currentDate = new Date()
@@ -24,6 +25,7 @@ export const formatTime = (timeStamp) => {
 
 const PostList = ({subreddit}) => {
   const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchPosts()
@@ -31,6 +33,7 @@ const PostList = ({subreddit}) => {
   
  const fetchPosts = async() => {
     try {
+      setLoading(true)
       const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
       const data = await response.json()
       if(data && data.data && data.data.children){
@@ -49,42 +52,51 @@ const PostList = ({subreddit}) => {
         }
       })
         setPosts(postData)
+        setLoading(false)
       } 
     } catch (error) {
       console.error('Error fetching posts:', error)
+      setLoading(false)
     }
   }
 
 
   return (
     <div>
-      {posts.map((post) => (
-        <div key={post.id} style={cardStyle}>
-          <p style={subredditStyle}>r/{subreddit}</p>
-        <Link
-          to={`/post/${post.id}?postContent=${encodeURIComponent(
-            post.content
-          )}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${post.numOfComments}`}
-          style={linkStyles}
-        >
-            <div style={titleContainerStyle}>
-        {post.image && post.image !== "self" ? (
-          <img src={post.image} alt="" style={imageStyle} />
-        ) : (
-          <FaPen  />
-        )}
-        <h2 style={titleStyles}>{post.title}</h2>
-        <div style={upvotesContainerStyle}>
-          <FaArrowUp />
-          <span style={upvotesStyle}>{post.upvotes}</span>
+      {loading ? (
+        <div style={loadingContainerStyles}>
+          <div className="loader"></div>
         </div>
-      </div>
-    </Link>
-          <p style={postInfoStyles}>
-            Posted by: {post.author} | {formatTime(post.time)} | <FaComment/> {post.numOfComments}
-          </p>
-        </div>
-      ))}
+      ) : (
+        posts.map((post) => (
+          <div key={post.id} style={cardStyle}>
+            <p style={subredditStyle}>r/{subreddit}</p>
+            <Link
+              to={`/post/${post.id}?postContent=${encodeURIComponent(
+                post.content
+              )}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${post.numOfComments}`}
+              style={linkStyles}
+            >
+              <div style={titleContainerStyle}>
+                {post.image && post.image !== "self" ? (
+                  <img src={post.image} alt="" style={imageStyle} />
+                ) : (
+                  <FaPen />
+                )}
+                <h2 style={titleStyles}>{post.title}</h2>
+                <div style={upvotesContainerStyle}>
+                  <FaArrowUp />
+                  <span style={upvotesStyle}>{post.upvotes}</span>
+                </div>
+              </div>
+            </Link>
+            <p style={postInfoStyles}>
+              Posted by: {post.author} | {formatTime(post.time)} |{" "}
+              <FaComment /> {post.numOfComments}
+            </p>
+          </div>
+        ))
+      )}
     </div>
   );
 };
@@ -145,5 +157,12 @@ const subredditStyle = {
   color:'gray',
   fontWeight:'bold'
 }
+
+const loadingContainerStyles = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "200px",
+};
 
 export default PostList
