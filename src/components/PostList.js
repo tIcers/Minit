@@ -22,13 +22,12 @@ export const formatTime = (timeStamp) => {
 
   }
 
-const PostList = () => {
-  const subreddit = 'reactjs'
+const PostList = ({subreddit}) => {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
     fetchPosts()
-  }, [])
+  }, [subreddit])
   
  const fetchPosts = async() => {
     try {
