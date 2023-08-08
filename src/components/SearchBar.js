@@ -11,7 +11,9 @@ const SearchBar = ({onSubredditChange}) => {
 
   const handleSearch = () => {
     onSubredditChange(searchInput)
+    setSearchInput("")
   }
+
 
   const handleKeyPress = (e) => {
     if (e.key ==="Enter"){
