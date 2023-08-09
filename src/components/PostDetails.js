@@ -10,17 +10,18 @@ const PostDetails = () => {
   const postContent = searchParams.get("postContent");
   const upvotes = searchParams.get("upvotes");
   const numOfComments = searchParams.get("numOfComments");
+  const subreddit = searchParams.get("subreddit")
 
   const [postComments, setPostComments] = useState([]);
-
+  
   useEffect(() => {
     fetchComments();
-  }, [postId]);
+  }, [subreddit, postId]);
 
   const fetchComments = async () => {
     try {
       const response = await fetch(
-        `https://www.reddit.com/r/reactjs/comments/${postId}.json`
+        `https://www.reddit.com/r/${subreddit}/comments/${postId}.json`
       );
       const data = await response.json();
 
