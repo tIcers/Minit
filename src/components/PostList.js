@@ -72,7 +72,7 @@ const PostList = ({subreddit}) => {
           <div key={post.id} style={cardStyle}>
             <p style={subredditStyle}>r/{subreddit}</p>
             <Link
-              to={`/post/${post.id}?postContent=${encodeURIComponent(
+              to={`/post/${post.id}?subreddit=${subreddit}&postContent=${encodeURIComponent(
                 post.content
               )}&upvotes=${encodeURIComponent(post.upvotes)}&numOfComments=${post.numOfComments}`}
               style={linkStyles}
