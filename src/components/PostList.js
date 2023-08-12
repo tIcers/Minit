@@ -31,34 +31,40 @@ const PostList = ({subreddit}) => {
     fetchPosts()
   }, [subreddit])
   
- const fetchPosts = async() => {
-    try {
-      setLoading(true)
-      const response = await fetch(`https:www.reddit.com/r/${subreddit}.json`)
-      const data = await response.json()
-      if(data && data.data && data.data.children){
-        const postData = data.data.children.map((child) => {
-        const post = child.data
-        console.log("image thumbnail", post.thumbnail)
+const fetchPosts = async () => {
+  try {
+    setLoading(true);
+    const searchQuery = encodeURIComponent(`subreddit:${subreddit}`);
+    const sort = 'new';
+    const limit = 25; 
+
+    const response = await fetch(
+      `https://www.reddit.com/search.json?q=${searchQuery}&sort=${sort}&limit=${limit}`
+    );
+    const data = await response.json();
+    if (data && data.data && data.data.children) {
+      const postData = data.data.children.map((child) => {
+        const post = child.data;
+        console.log("image thumbnail", post.thumbnail);
         return {
-          id:post.id,
-          title:post.title,
-          content:post.selftext,
-          image:post.thumbnail,
-          author:post.author,
-          time:post.created_utc,
-          numOfComments:post.num_comments,
-          upvotes:post.ups,
-        }
-      })
-        setPosts(postData)
-        setLoading(false)
-      } 
-    } catch (error) {
-      console.error('Error fetching posts:', error)
-      setLoading(false)
+          id: post.id,
+          title: post.title,
+          content: post.selftext,
+          image: post.thumbnail,
+          author: post.author,
+          time: post.created_utc,
+          numOfComments: post.num_comments,
+          upvotes: post.ups,
+        };
+      });
+      setPosts(postData);
+      setLoading(false);
     }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    setLoading(false);
   }
+};
 
 
   return (
