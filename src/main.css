@@ -1,0 +1,22 @@
+/* Light Mode Styles */
+[data-theme="light"] {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+[data-theme="light"] button {
+  background-color: #f0f0f0;
+  color: #333333;
+}
+
+/* Dark Mode Styles */
+[data-theme="dark"] {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+[data-theme="dark"] button {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
