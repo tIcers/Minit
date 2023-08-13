@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {FaComment, FaArrowUp, FaArrowDown, FaPen} from 'react-icons/fa'
 import { Link } from "react-router-dom";
 import '../load.css'
+import '../App.css'
 
 export const formatTime = (timeStamp) => {
     const currentDate = new Date()
@@ -45,7 +46,6 @@ const fetchPosts = async () => {
     if (data && data.data && data.data.children) {
       const postData = data.data.children.map((child) => {
         const post = child.data;
-        console.log("image thumbnail", post.thumbnail);
         return {
           id: post.id,
           title: post.title,
@@ -76,6 +76,9 @@ const fetchPosts = async () => {
       ) : (
         posts.map((post) => (
           <div key={post.id} style={cardStyle}>
+              <div className="post-content">
+                {post.content&& <p>{post.content}</p>}
+              </div>
             <p style={subredditStyle}>r/{subreddit}</p>
             <Link
               to={`/post/${post.id}?subreddit=${subreddit}&postContent=${encodeURIComponent(
