@@ -7,7 +7,7 @@ const PostDetails = () => {
   const location = useLocation();
   const postId = location.pathname.split("/post/")[1]
   const searchParams = new URLSearchParams(location.search);
-  const postContent = searchParams.get("postContent");
+  const postContent = decodeURIComponent(searchParams.get("postContent"));
   const upvotes = searchParams.get("upvotes");
   const numOfComments = searchParams.get("numOfComments");
   const subreddit = searchParams.get("subreddit")
