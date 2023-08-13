@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import ModeSwitchButton from "./ModeSwitchButton";
 import SearchBar from './SearchBar'
 
 const NavBar = ({onSubredditChange}) => {
@@ -14,10 +15,10 @@ const NavBar = ({onSubredditChange}) => {
         <SearchBar onSubredditChange={onSubredditChange} />
       </div>
       <div style={rightContainerStyles}></div>
-    </nav>
+        <ModeSwitchButton />
+      </nav>
   );
 };
-
 const navStyles = {
   display: 'flex',
   alignItems: 'center',
