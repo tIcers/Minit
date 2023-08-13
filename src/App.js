@@ -3,6 +3,7 @@ import PostList from './components/PostList';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PostDetails from './components/PostDetails';
 import { useState } from 'react';
+import './App.css'
 
 function App() {
   const [subreddit, setSubreddit] = useState("reactjs");
