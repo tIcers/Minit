@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+.dark-mode {
+  background-color: #333;
+  color: black;
+}
+.dark-mode .post-cotent p {
+  color: #fff; /* Set an appropriate text color for dark mode */
+}
