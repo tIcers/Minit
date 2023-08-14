@@ -7,13 +7,14 @@ import './App.css'
 
 function App() {
   const [subreddit, setSubreddit] = useState("reactjs");
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   const handleSubredditChange = (searchInput) => {
     setSubreddit(searchInput);
   };
   return (
     <Router>
-      <NavBar onSubredditChange={handleSubredditChange} />
+      <NavBar onSubredditChange={handleSubredditChange} isDarkMode={isDarkMode}/>
       <Routes>
         <Route path='/' element={<PostList subreddit={subreddit}/>}/>
         <Route path='/post/:postId' element={<PostDetails/>}/>
