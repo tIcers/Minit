@@ -100,7 +100,7 @@ const flattetnCommentsTree = (comments, depth = 0 ) => {
     </React.Fragment>
   ))
 ) : (
-  <p>No comments available.</p>
+  <p>Nobody comments yet.</p>
 )}
       </div>
     </div>
