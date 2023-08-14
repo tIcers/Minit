@@ -1,4 +1,4 @@
-# Minit - Mini Reddit Clone
+# Minit - Mini Simple Reddit
 
 Minit is a simplified version of Reddit that offers basic functionality for users to browse and interact with posts and comments. Users can filter posts by different criteria, search subreddits, switch between dark and light modes, and view comments in a tree-like structure.
 
