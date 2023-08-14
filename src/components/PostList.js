@@ -74,7 +74,7 @@ const fetchPosts = async () => {
 
 
 return (
-  <div className={`filter-container ${isDarkMode ? 'dark-mode' : ''}`}>
+  <div style={isDarkMode ? { ...cardStyle, ...darkMode } : { ...cardStyle, ...lightMode }}>
     <FilterButtons selectedFilter={selectedFilter} onFilterChange={handleFilterChange} />
     <div className="post-list">
       {loading ? (
@@ -85,6 +85,7 @@ return (
         posts.map((post) => (
           <div key={post.id} style={cardStyle}>
             <p style={subredditStyle}>r/{subreddit}</p>
+
             <Link
               to={`/post/${post.id}?subreddit=${subreddit}&postContent=${encodeURIComponent(
                 post.content
@@ -178,6 +179,15 @@ const loadingContainerStyles = {
   justifyContent: "center",
   alignItems: "center",
   height: "200px",
+};
+const darkMode = {
+  backgroundColor: "#333", // Dark background color
+  color: "#fff",           // Light text color for dark mode
+};
+
+const lightMode = {
+  backgroundColor: "#fff", // Light background color
+  color: "#333",           // Dark text color for light mode
 };
 
 export default PostList
