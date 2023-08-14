@@ -3,6 +3,7 @@ import {FaComment, FaArrowUp, FaArrowDown, FaPen} from 'react-icons/fa'
 import { Link } from "react-router-dom";
 import '../load.css'
 import '../App.css'
+import FilterButtons from "./FilterButtons";
 
 export const formatTime = (timeStamp) => {
     const currentDate = new Date()
@@ -24,19 +25,24 @@ export const formatTime = (timeStamp) => {
 
   }
 
-const PostList = ({subreddit}) => {
+const PostList = ({subreddit, isDarkMode}) => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedFilter, setSelectedFilter ] = useState('new')
 
   useEffect(() => {
     fetchPosts()
-  }, [subreddit])
+  }, [subreddit, selectedFilter])
+
+const handleFilterChange = (filter) => {
+    setSelectedFilter(filter)
+  }
   
 const fetchPosts = async () => {
   try {
     setLoading(true);
     const searchQuery = encodeURIComponent(`subreddit:${subreddit}`);
-    const sort = 'new';
+    const sort = selectedFilter;
     const limit = 25; 
 
     const response = await fetch(
@@ -67,8 +73,10 @@ const fetchPosts = async () => {
 };
 
 
-  return (
-    <div>
+return (
+  <div className={`filter-container ${isDarkMode ? 'dark-mode' : ''}`}>
+    <FilterButtons selectedFilter={selectedFilter} onFilterChange={handleFilterChange} />
+    <div className="post-list">
       {loading ? (
         <div style={loadingContainerStyles}>
           <div className="loader"></div>
@@ -76,9 +84,6 @@ const fetchPosts = async () => {
       ) : (
         posts.map((post) => (
           <div key={post.id} style={cardStyle}>
-              <div className="post-content">
-                {post.content&& <p>{post.content}</p>}
-              </div>
             <p style={subredditStyle}>r/{subreddit}</p>
             <Link
               to={`/post/${post.id}?subreddit=${subreddit}&postContent=${encodeURIComponent(
@@ -87,7 +92,7 @@ const fetchPosts = async () => {
               style={linkStyles}
             >
               <div style={titleContainerStyle}>
-                {post.image && post.image !== "self" ? (
+                {post.image && post.image !== 'self' ? (
                   <img src={post.image} alt="" style={imageStyle} />
                 ) : (
                   <FaPen />
@@ -100,15 +105,16 @@ const fetchPosts = async () => {
               </div>
             </Link>
             <p style={postInfoStyles}>
-              Posted by: {post.author} | {formatTime(post.time)} |{" "}
-              <FaComment /> {post.numOfComments}
+              Posted by: {post.author} | {formatTime(post.time)} | <FaComment />{' '}
+              {post.numOfComments}
             </p>
           </div>
         ))
       )}
     </div>
-  );
-};
+  </div>
+);
+}
 
 const titleContainerStyle = {
   display: "flex",
@@ -126,7 +132,7 @@ const imageStyle = {
 const upvotesContainerStyle = {
   display: "flex",
   alignItems: "center",
-  background: "DarkGray", // You can change the background color of the upvotes container here
+  background: "DarkGray",  
   borderRadius: "4px",
   padding: "4px 8px",
 };
