@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import ModeSwitchButton from "./ModeSwitchButton";
 import SearchBar from './SearchBar'
+import { Link } from "react-router-dom";
 
-const NavBar = ({onSubredditChange}) => {
+const NavBar = ({onSubredditChange, toggleTheme}) => {
   return (
     <nav style={navStyles}>
       <div style={leftContainerStyles}>
         <div style={imageContainerStyle}>
+          <Link to='/' style={logoLinkStyle}>
           <img src="../../AlienBlue_Icon.png" style={imageStyle} alt="logo" />
           <span style={letterStyle}>Minit</span>
+          </Link>
         </div>
       </div>
       <div style={centerContainerStyles}> {/* Updated style for centerContainer */}
         <SearchBar onSubredditChange={onSubredditChange} />
       </div>
       <div style={rightContainerStyles}></div>
-        <ModeSwitchButton />
+      <div className='toggle-bar'>
+                <label class="toggle">
+                    <input type="checkbox"  onClick={toggleTheme}></input>
+                    <span class="slider"></span>
+                    <span class="labels" data-on='Dark' data-off="Light"></span>
+                </label>
+            </div>
       </nav>
   );
 };
@@ -56,6 +65,12 @@ const letterStyle = {
 const imageContainerStyle = {
   display: 'flex',
   alignItems: 'center',
+};
+const logoLinkStyle = {
+  textDecoration: "none",
+  color: "blue",
+  display: "flex",
+  alignItems: "center",
 };
 
 export default NavBar
