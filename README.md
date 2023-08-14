@@ -46,6 +46,6 @@ Search by Popular + Subreddit (python this example)
 <img width="1224" alt="image" src="https://github.com/tIcers/Minit/assets/87591566/7b118b84-4c86-4b7e-8081-92969d6a42dd">
 
 Fetch Comments with flatten tree:
-<img width="1249" alt="image" src="https://github.com/tIcers/Minit/assets/87591566/98f68f36-aaef-4609-bbad-6d3f1686b0de">
+<img width="1233" alt="image" src="https://github.com/tIcers/Minit/assets/87591566/266f5dfb-9a25-4a09-a564-135630d0fb2a">
 
 
