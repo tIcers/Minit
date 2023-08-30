@@ -17,14 +17,6 @@ Minit is a simplified version of Reddit that offers basic functionality for user
 - CSS: Styling and layout are implemented using CSS.
 - Reddit API: Data is fetched from the Reddit API to populate posts and comments.
 
-## Getting Started
-
-1. Clone the repository: `git clone https://github.com/your-username/minit.git`
-2. Navigate to the project directory: `cd minit`
-3. Install dependencies: `npm install`
-4. Start the development server: `npm start`
-5. Open your browser and navigate to `http://localhost:3000` to access the application.
-
 ## Usage
 
 - On the homepage, you'll see a list of posts from various subreddits.
