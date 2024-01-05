@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import { FaArrowDown, FaArrowUp, FaComment } from "react-icons/fa";
 import { useLocation, useParams } from "react-router-dom";
-import { formatTime, cardStyle } from "./PostList";
+import { formatTime } from "./PostList";
+import styles from "../PostDetails.module.css"; // Import the styles
 import React from "react";
 const PostDetails = () => {
   const location = useLocation();
-  const postId = location.pathname.split("/post/")[1]
+  const postId = location.pathname.split("/post/")[1];
   const searchParams = new URLSearchParams(location.search);
   const postContent = decodeURIComponent(searchParams.get("postContent"));
   const upvotes = searchParams.get("upvotes");
   const numOfComments = searchParams.get("numOfComments");
-  const subreddit = searchParams.get("subreddit")
+  const subreddit = searchParams.get("subreddit");
 
   const [postComments, setPostComments] = useState([]);
-  
+
   useEffect(() => {
     fetchComments();
   }, [subreddit, postId]);
@@ -21,15 +22,15 @@ const PostDetails = () => {
   const fetchComments = async () => {
     try {
       const response = await fetch(
-        `https://www.reddit.com/r/${subreddit}/comments/${postId}.json`
+        `https://www.reddit.com/r/${subreddit}/comments/${postId}.json`,
       );
       const data = await response.json();
 
       // Check if comments data is available in the response
       const commentsData = data[1]?.data?.children;
       if (Array.isArray(commentsData) && commentsData.length > 0) {
-        const flatternComments = flattetnCommentsTree(commentsData)
-        setPostComments(flatternComments)
+        const flatternComments = flattetnCommentsTree(commentsData);
+        setPostComments(flatternComments);
       } else {
         // No comments available or API response structure is different
         setPostComments([]);
@@ -38,89 +39,83 @@ const PostDetails = () => {
       console.error("Error fetching comments:", error);
     }
   };
-// Function to flatten the comment tree and add depth information
-const flattetnCommentsTree = (comments, depth = 0 ) => {
-    let flatComments = []
-    for (const comment of comments){
+  // Function to flatten the comment tree and add depth information
+  const flattetnCommentsTree = (comments, depth = 0) => {
+    let flatComments = [];
+    for (const comment of comments) {
       flatComments.push({
-      id:comment.data.id,
-      text:comment.data.body,
-      author:comment.data.author,
-      upvotes:comment.data.ups,
-      time:comment.data.created_utc,
-      depth:depth,
-      avatar:comment.icon_image,
-    })
+        id: comment.data.id,
+        text: comment.data.body,
+        author: comment.data.author,
+        upvotes: comment.data.ups,
+        time: comment.data.created_utc,
+        depth: depth,
+        avatar: comment.icon_image,
+      });
 
-    if (comment.data.replies && comment.data.replies.data && comment.data.replies.data.children){
-      flatComments = [
-        ...flatComments,
-        ...flattetnCommentsTree(comment.data.replies.data.children, depth +1),
-        ]
+      if (
+        comment.data.replies &&
+        comment.data.replies.data &&
+        comment.data.replies.data.children
+      ) {
+        flatComments = [
+          ...flatComments,
+          ...flattetnCommentsTree(
+            comment.data.replies.data.children,
+            depth + 1,
+          ),
+        ];
       }
     }
-    return flatComments
-  }
+    return flatComments;
+  };
   return (
     <div>
       <h2>Post Details:</h2>
-      <div style={cardStyle}>
+      <div className={styles.cardStyle}>
         <p>{postContent}</p>
-        <div style={voteStyles}>
-          <FaArrowUp style={arrowStyle} />
+        <div className={styles.voteStyles}>
+          <FaArrowUp className={styles.arrowStyle} />
           {upvotes}
-          <FaArrowDown style={arrowStyle} />
-          <FaComment style={commentIconStyle} />
+          <FaArrowDown className={styles.arrowStyle} />
+          <FaComment className={styles.commentIconStyle} />
           {numOfComments}
         </div>
       </div>
 
-      {/* Rendering comments with the commentStyle */}
+      {/* Rendering comments */}
       <div>
         <h3>Comments:</h3>
-{postComments.length > 0 ? (
-  postComments.map((comment) => (
-    <React.Fragment key={comment.id}>
-      <div style={cardStyle}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {comment.avatar && (
-            <img src={comment.avatar} alt={`${comment.author}'s avatar`} style={{ width: '24px', height: '24px', marginRight: '8px' }} />
-          )}
-          <p style={{ marginLeft: `${comment.depth * 20}px` }}>
-            {comment.author} | {formatTime(comment.time)}
-          </p>
-        </div>
-        <p style={{ marginLeft: `${comment.depth * 20}px` }}>
-          {comment.text}
-        </p>
-        <p style={{ marginLeft:`${comment.depth * 20}px` }}>
-          <FaArrowUp/> {comment.upvotes} <FaArrowDown/>
-        </p>
-      </div>
-    </React.Fragment>
-  ))
-) : (
-  <p>Nobody comments yet.</p>
-)}
+        {postComments.length > 0 ? (
+          postComments.map((comment) => (
+            <React.Fragment key={comment.id}>
+              <div className={styles.cardStyle}>
+                <div className={styles.commentHeader}>
+                  {comment.avatar && (
+                    <img
+                      src={comment.avatar}
+                      alt={`${comment.author}'s avatar`}
+                      className={styles.commentAvatar}
+                    />
+                  )}
+                  <p className={styles.commentAuthor}>
+                    {comment.author} | {formatTime(comment.time)}
+                  </p>
+                </div>
+                <p className={styles.commentText}>{comment.text}</p>
+                <div className={styles.commentFooter}>
+                  <FaArrowUp />
+                  {comment.upvotes}
+                  <FaArrowDown />
+                </div>
+              </div>
+            </React.Fragment>
+          ))
+        ) : (
+          <p className={styles.noComments}>Nobody comments yet.</p>
+        )}
       </div>
     </div>
   );
 };
-
-
-const voteStyles = {
-  display:'flex',
-  alignItems:'center',
-}
-
-const arrowStyle = {
-  marginRight:'10px',
-  cursor:'pointer',
-}
-
-const commentIconStyle = {
-  cursor:'pointer',
-}
-
-
-export default PostDetails
+export default PostDetails;
